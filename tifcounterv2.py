@@ -33,8 +33,8 @@ from subprocess import Popen, PIPE
 try:
 
     msg = MIMEText(content)
-    msg["From"] = "mani.ali@unb.ca"
-    msg["To"] = "maniali@gmail.com"
+    msg["From"] = "Sender Email"
+    msg["To"] = "Receiver Email"
     msg["Subject"] = "Server Status"
     p = Popen(["/usr/sbin/sendmail", "-t"], stdin=PIPE)
     p.communicate(msg.as_string())
