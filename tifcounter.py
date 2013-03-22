@@ -3,7 +3,6 @@
 # Imports
 import sys
 import os
-from smtplib import SMTP_SSL as SMTP
 import glob
 
 # Dictionary of Paths
@@ -20,33 +19,18 @@ message = ""
 #find display number of files ending with TIF extension
 for key, value in paths.iteritems():
     message = message + paths[key]+' : '+ str(len(glob.glob(os.path.join(value,'*.TIF')))) + ' Files \n'
-
-# SMTP Configuration    
-SMTP_SERVER = 'smtp.unb.ca'
-SMTP_PORT = 465
-
-sender = 'your-email'
-USERNAME = 'ENTER USERNAME'
-PASSWORD = 'ENTER PASSWORD'
-text_subtype = 'plain'
-
-destination = ['aaa@example.com']    
 content = "Image Count on the Server: \n" + str(message)
 
 from email.MIMEText import MIMEText
+from subprocess import Popen, PIPE
 
 try:
-    msg = MIMEText(content, text_subtype)
-    msg['Subject']=  'Server Status'
-    msg['From']   = sender # some SMTP servers will do this automatically, not all
-
-    conn = SMTP(SMTP_SERVER)
-    conn.set_debuglevel(False)
-    conn.login(USERNAME, PASSWORD)
-    try:
-        conn.sendmail(sender, destination, msg.as_string())
-    finally:
-        conn.close()
+    msg = MIMEText(content)
+    msg["From"] = "mani.ali@unb.ca"
+    msg["To"] = "maniali@gmail.com"
+    msg["Subject"] = "Server Status"
+    p = Popen(["/usr/sbin/sendmail", "-t"], stdin=PIPE)
+    p.communicate(msg.as_string())
 
 except Exception, exc:
     sys.exit( "mail failed; %s" % str(exc) ) # give a error message
