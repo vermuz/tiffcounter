@@ -25,12 +25,12 @@ for key, value in paths.iteritems():
 SMTP_SERVER = 'smtp.unb.ca'
 SMTP_PORT = 465
 
-sender = 'u4sd0@unb.ca'
-USERNAME = 'u4sd0'
-PASSWORD = 'Indi@611'
+sender = 'your-email'
+USERNAME = 'ENTER USERNAME'
+PASSWORD = 'ENTER PASSWORD'
 text_subtype = 'plain'
 
-destination = ['maniali@gmail.com']    
+destination = ['aaa@example.com']    
 content = "Image Count on the Server: \n" + str(message)
 
 from email.MIMEText import MIMEText
